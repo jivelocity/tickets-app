@@ -1,4 +1,6 @@
-import { initialTickets } from "@/data";
+import { notFound } from "next/navigation";
+import { getTicket } from "@/features/ticket/queries/get-ticket";
+import { TicketItem } from "@/features/ticket/components/ticket-item";
 
 type TicketPageProps = {
   params: Promise<{
@@ -9,16 +11,16 @@ type TicketPageProps = {
 const TicketPage = async ({ params }: TicketPageProps) => {
   const { ticketId } = await params;
 
-  const ticket = initialTickets.find((ticket) => ticket.id === ticketId);
+  const ticket = await getTicket(ticketId);
+
   if (!ticket) {
-    return <div>ticket not found</div>;
+    notFound();
   }
 
   return (
-    <>
-      <h2 className="text-lg">{ticket.title}</h2>
-      <p className="text-sm">{ticket.content}</p>
-    </>
+    <div className="flex justify-center animate-fadeInFromTop">
+      <TicketItem ticket={ticket} isDetail />
+    </div>
   );
 };
 
