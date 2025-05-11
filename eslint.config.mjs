@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import { FlatCompat } from "@eslint/eslintrc";
@@ -22,6 +23,7 @@ const eslintConfig = [
       ],
       "simple-import-sort/exports": "error",
     },
+    ignorePatterns: ["src/components/ui/"],
     parserOptions: {
       sourceType: "module",
       ecmaVersion: "latest",

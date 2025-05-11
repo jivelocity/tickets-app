@@ -1,13 +1,14 @@
 "use client";
-import { LucideSquareArrowOutUpRight, LucideTrash } from "lucide-react";
+import { LucideSquareArrowOutUpRight, LucideSquarePen } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { ticketPath } from "@/path";
+import { ticketEditPath, ticketPath } from "@/path";
 import { deleteTicket } from "../actions/delete-ticket";
 import { TICKET_ICONS } from "../contants";
 import { Ticket } from "../types";
+import { DeleteButton } from "./delete-button";
 
 type TicketItemProps = {
   ticket: Ticket;
@@ -17,20 +18,24 @@ type TicketItemProps = {
 const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
   const detailButton = (
     <Button asChild variant="outline" size="icon">
-      <Link href={ticketPath(ticket.id)}>
+      <Link prefetch href={ticketPath(ticket.id)}>
         <LucideSquareArrowOutUpRight />
       </Link>
     </Button>
   );
 
-  const handleDeleteTicket = async () => {
-    await deleteTicket(ticket.id);
-  };
+  const editButton = (
+    <Button asChild variant="outline" size="icon">
+      <Link prefetch href={ticketEditPath(ticket.id)}>
+        <LucideSquarePen />
+      </Link>
+    </Button>
+  );
 
   const deleteButton = (
-    <Button variant="outline" size="icon" onClick={handleDeleteTicket}>
-      <LucideTrash className="h-4 w-4" />
-    </Button>
+    <form action={deleteTicket.bind(null, ticket.id)}>
+      <DeleteButton />
+    </form>
   );
 
   return (
@@ -58,7 +63,17 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
         </CardContent>
       </Card>
       <div className="flex flex-col gap-y-1">
-        {isDetail ? deleteButton : detailButton}
+        {isDetail ? (
+          <>
+            {deleteButton}
+            {editButton}
+          </>
+        ) : (
+          <>
+            {detailButton}
+            {editButton}
+          </>
+        )}
       </div>
     </div>
   );
