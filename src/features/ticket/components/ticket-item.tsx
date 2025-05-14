@@ -1,5 +1,9 @@
 "use client";
-import { LucideSquareArrowOutUpRight, LucideSquarePen } from "lucide-react";
+import {
+  LucideMoreVertical,
+  LucideSquareArrowOutUpRight,
+  LucideSquarePen,
+} from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,10 +16,9 @@ import {
 import { cn } from "@/lib/utils";
 import { ticketEditPath, ticketPath } from "@/path";
 import { toCurrenctFromCent } from "@/utils/currency";
-import { deleteTicket } from "../actions/delete-ticket";
 import { TICKET_ICONS } from "../contants";
 import { Ticket } from "../types";
-import { DeleteButton } from "./delete-button";
+import { TicketMoreMenu } from "./ticket-more-menu";
 
 type TicketItemProps = {
   ticket: Ticket;
@@ -39,10 +42,15 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
     </Button>
   );
 
-  const deleteButton = (
-    <form action={deleteTicket.bind(null, ticket.id)}>
-      <DeleteButton />
-    </form>
+  const moreMenu = (
+    <TicketMoreMenu
+      ticket={ticket}
+      trigger={
+        <Button variant="outline" size="icon">
+          <LucideMoreVertical className="h-4 w-4" />
+        </Button>
+      }
+    />
   );
 
   return (
@@ -78,8 +86,8 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
       <div className="flex flex-col gap-y-1">
         {isDetail ? (
           <>
-            {deleteButton}
             {editButton}
+            {moreMenu}
           </>
         ) : (
           <>
