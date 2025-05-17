@@ -15,6 +15,7 @@ const eslintConfig = [
     extends: ["next/core-web-vitals", "next/typescript"],
     plugins: ["simple-import-sort"],
     rules: {
+      "@typescript-eslint/no-explicit-any": ["off"],
       "simple-import-sort/imports": [
         "error",
         {

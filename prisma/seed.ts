@@ -1,6 +1,4 @@
-import { prisma } from "@/lib/prisma";
-
-const tickets = [
+export const tickets = [
   {
     title: "Ticket 1",
     content: "This is the first ticket from the database",
@@ -18,18 +16,18 @@ const tickets = [
   },
 ];
 
-const seed = async () => {
-  const t0 = performance.now();
-  console.log("DB Seed: Started...");
-
-  await prisma.ticket.deleteMany();
-
-  await prisma.ticket.createMany({
-    data: tickets,
-  });
-
-  const t1 = performance.now();
-  console.log(`DB Seed: Finishing (${t1 - t0}ms)`);
-};
-
-seed();
+// const seed = async () => {
+//   const t0 = performance.now();
+//   console.log("DB Seed: Started...");
+//
+//   await prisma.ticket.deleteMany();
+//
+//   await prisma.ticket.createMany({
+//     data: tickets,
+//   });
+//
+//   const t1 = performance.now();
+//   console.log(`DB Seed: Finishing (${t1 - t0}ms)`);
+// };
+//
+// seed();
